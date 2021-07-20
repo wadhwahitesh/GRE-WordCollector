@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -11,20 +11,23 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   @override
-  void initState() {
+  void initState(){
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/search');
-    });
+    sendData();
+
+    // Future.delayed(const Duration(seconds: 3), () {
+    //   Navigator.pushReplacementNamed(context, '/search', arguments: prefs);
+    // });
+  }
+
+  void sendData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Navigator.pushReplacementNamed(context, '/search', arguments: prefs);
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
       backgroundColor: Colors.blue[800],
       body: SafeArea(
@@ -49,7 +52,5 @@ class _LoadingState extends State<Loading> {
         ),
       ),
     );
-
-
   }
 }
