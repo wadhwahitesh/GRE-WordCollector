@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:word_collector/services/word.dart';
 import 'package:word_collector/pages/word_card.dart';
@@ -20,12 +22,20 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     List<Word> all_words;
     SharedPreferences prefs = ModalRoute.of(context)!.settings.arguments as SharedPreferences;
+    if(!MyDrawer.isInit) {
+      MyDrawer.prefs = prefs;
+      MyDrawer.isInit = true;
+
+    }
+    //prefs.remove('words_data');
     if(prefs.containsKey('words_data')){
-      all_words = Word.decode(prefs.get('words_data') as String);
+      all_words = Word.decode(prefs.getStringList('words_data')!);
+         //Word.decode(prefs.get('words_data') as String);
     }
     else
       all_words = [];
-    print(all_words);
+    //all_words = [];  //reset data
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.cyan,
@@ -81,7 +91,7 @@ class _SearchState extends State<Search> {
                 await Future.forEach(
                     wordss, (Word word) async => {await word.getData()});
                 all_words += wordss;
-                prefs.setString('words_data', Word.encode(all_words));
+                prefs.setStringList('words_data', Word.encode(all_words));
                 //await Future.wait(wordss.forEach((element) async {await element.getData();}));
                 //wordss.map((word) async => await word.getData());
                 //words.map((word) => WordCard(word: word)).toList();

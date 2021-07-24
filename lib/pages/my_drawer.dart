@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
+  static bool isInit = false;
+  static late SharedPreferences prefs;
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 250,
       child: Drawer(
@@ -32,6 +37,7 @@ class MyDrawer extends StatelessWidget {
                   fontSize: 20,
                 ),),
               ),
+              onTap: () => Navigator.pushReplacementNamed(context, '/search', arguments: prefs),
 
             ),
             Divider(height: 3, thickness: 2, indent: 20, endIndent: 0,),
@@ -43,6 +49,7 @@ class MyDrawer extends StatelessWidget {
                     fontSize: 20,
                   ),),
               ),
+              onTap: ()=>Navigator.pushReplacementNamed(context, '/practice', arguments: prefs),
             ),
             Divider(height: 3, thickness: 2, indent: 20, endIndent: 0,),
             ListTile(
@@ -53,6 +60,7 @@ class MyDrawer extends StatelessWidget {
                     fontSize: 20,
                   ),),
               ),
+              onTap: ()=> Navigator.pushReplacementNamed(context, '/view', arguments: prefs),
             ),
             Divider(height: 3, thickness: 2, indent: 20, endIndent: 0,),
           ],

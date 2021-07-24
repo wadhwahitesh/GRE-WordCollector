@@ -23,7 +23,8 @@ class _LoadingState extends State<Loading> {
 
   void sendData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Navigator.pushReplacementNamed(context, '/search', arguments: prefs);
+    await Future.delayed(Duration(seconds: 2), (){});
+    Navigator.pushReplacementNamed(context, '/search', arguments: prefs);
   }
 
   @override
